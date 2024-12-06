@@ -8,7 +8,7 @@ from app.services.user_service import (
 )
 from pydantic import BaseModel
 
-from app.utils.auth import get_bearer_token, validate_access_token
+from app.utils.auth import get_bearer_token, validate_access_token,validate_refresh_token, create_access_token
 
 router = APIRouter()
 
@@ -80,3 +80,25 @@ async def update_user(
     except Exception as e:
         print(f"Unexpected Error: {str(e)}")
         raise HTTPException(status_code=500, detail="An unexpected error occurred.")
+
+
+
+@router.post("/refresh")
+async def refresh_token(token: str = Depends(get_bearer_token)):
+    """
+    Refresh the access token using a valid refresh token.
+    """
+    payload = validate_refresh_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Invalid or expired refresh token.")
+
+    # Generate a new access token
+    user_data = {
+        "username": payload["username"],
+        "role": payload["role"]
+    }
+    new_access_token = create_access_token(data=user_data)
+
+    return {
+        "access_token": new_access_token
+    }

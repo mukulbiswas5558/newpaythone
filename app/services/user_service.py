@@ -1,6 +1,6 @@
 from app.database import db
 from app.models.user_model import CreateUser, LoginUser,UpdateUser
-from app.utils.auth import create_access_token, verify_password, get_password_hash
+from app.utils.auth import create_access_token, verify_password, get_password_hash,create_refresh_token
 from datetime import datetime
 
 
@@ -57,15 +57,17 @@ async def login_user_service(user: LoginUser):
         "role": db_user['role']
     }
     access_token = create_access_token(data=user_data)
+    refresh_token = create_refresh_token(data=user_data)
 
-    # Return user information and token
+    # Return user information and tokens
     return {
         "user": {
-            "id": db_user['id'],
-            "username": db_user['username'],
-            "role": db_user['role']
+            "id": db_user["id"],
+            "username": db_user["username"],
+            "role": db_user["role"]
         },
-        "access_token": access_token
+        "access_token": access_token,
+        "refresh_token": refresh_token
     }
 
 
