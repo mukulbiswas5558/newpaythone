@@ -1,0 +1,38 @@
+# Ignore virtual environment directory
+venv/
+env/
+
+# Ignore .env files for environment variables
+.env
+
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore the .pytest_cache directory, used by pytest
+.pytest_cache/
+
+# Ignore IDE/editor files (e.g., VSCode, PyCharm)
+.vscode/
+.idea/
+
+# Ignore jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore mypy configuration
+.mypy_cache/
+
+# Ignore coverage reports
+.coverage
+.coverage.*
+*.cover
+
+# Ignore the build and dist directories for packaging
+build/
+dist/
+*.egg-info/
+
+# Ignore the .DS_Store file on macOS
+.DS_Store
